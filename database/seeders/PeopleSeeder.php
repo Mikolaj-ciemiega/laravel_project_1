@@ -9,11 +9,6 @@ use Faker\Factory as Faker;
 
 class PeopleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         $faker = Faker::create();
