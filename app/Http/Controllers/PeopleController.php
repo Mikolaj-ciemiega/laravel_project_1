@@ -15,34 +15,29 @@ class PeopleController extends Controller{
         return response()->json(People::all(), 200);
     }
 
-    public function create(Request $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {  
-            $people = new People;
-            $people->category_name = $request->category_name;
-            $people->save();
-            return response()->json(null, 201);
+        $people = People::create($request->all());
+        $people->save();
+        return response()->json(null, 201);
     }
 
     public function show($id): JsonResponse
     {
        $people = DB::table('peoples')->where('id', $id)->first();
-       return response()->json($people);
+       return response()->json($people, 200);
     }
 
-    public function update(Request $request, People $people): JsonResponse
+    public function update(Request $request, $id): JsonResponse
     {
+        $people=People::find($id);
         $people->update($request->all());
-
-        return response()->json([
-            'status' => true,
-            'message' => "People Updated successfully!",
-            'people' => $people
-        ], 200);
+        return response()->json($people, 200);
     }
 
     public function destroy($id): JsonResponse
     {
-        DB::table('categories')->where('id', $id)->delete();
+        DB::table('peoples')->where('id', $id)->delete();
         return response()->json(null, 200);
     }
 }
