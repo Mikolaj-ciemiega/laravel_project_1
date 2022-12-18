@@ -29,12 +29,15 @@ class PeopleController extends Controller{
        return response()->json($people);
     }
 
-    public function update(Request $request, $id): JsonResponse
+    public function update(Request $request, People $people): JsonResponse
     {
-        $data = array();
-        $data['category_name'] = $request->category_name;
-        $user = DB::table('categories')->where('id', $id)->update($data);
-        return response()->json(null, 200);
+        $people->update($request->all());
+
+        return response()->json([
+            'status' => true,
+            'message' => "People Updated successfully!",
+            'people' => $people
+        ], 200);
     }
 
     public function destroy($id): JsonResponse
